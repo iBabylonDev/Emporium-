@@ -1,0 +1,13 @@
+asgiref
+autopep8>=2.0.1
+coverage
+Django
+flake8-django>=1.1.1
+isort
+mccabe
+Pillow
+pycodestyle>=2.10.0
+pyflakes>=3.0.1
+pytz
+sqlparse
+toml>=0.10.2
