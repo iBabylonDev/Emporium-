@@ -38,3 +38,14 @@ body{
 .btn-primary:focus{
     box-shadow:none !important;
 }
+
+.btn-outline-primary{
+    color:var(--majorelle-blue) !important;
+    border-color:var(--majorelle-blue) !important;
+}
+
+.btn-outline-primary:hover{
+    color:#fff !important;
+    border-color:transparent !important;
+    background-color:var(--majorelle-blue) !important;
+}
