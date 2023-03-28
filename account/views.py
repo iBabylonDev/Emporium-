@@ -6,8 +6,8 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
-from .forms import RegistrationForm
+from orders.views import user_orders
+from .forms import RegistrationForm,UserEditForm
 from .models import UserBase
 
 from .tokens import account_activation_token
@@ -15,9 +15,30 @@ from .tokens import account_activation_token
 
 @login_required
 def dashboard(request):
+    orders = user_orders(request)
     return render(request,
-                  'account/user/dashboard.html')
+                  'account/user/dashboard.html',
+                  {'section': 'profile', 'orders': orders})
 
+@login_required
+def edit_details(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+
+        if user_form.is_valid():
+            user_form.save()
+    else:
+        user_form = UserEditForm(instance=request.user)
+
+    return render(request,
+                  'account/user/edit_details.html', {'user_form': user_form})
+@login_required
+def delete_user(request):
+    user = UserBase.objects.get(user_name=request.user)
+    user.is_active = False
+    user.save()
+    logout(request)
+    return redirect('account:delete_confirmation')
 
 def account_register(request):
 
