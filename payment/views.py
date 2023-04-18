@@ -6,9 +6,9 @@ from django.http.response import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from orders.views import payment_confirmation
 from django.views.generic.base import TemplateView
-
 from basket.basket import Basket
-
+import os
+from django.conf import settings
 
 @login_required
 def BasketView(request):
@@ -17,14 +17,15 @@ def BasketView(request):
     total = total.replace('.', '')
     total = int(total)
 
-    stripe.api_key = 'sk_test_51MqaS7DERPQlw4gpBVY62hOEHikBriHzaB3GESInVtozT5dppLcZD6YOssrmgHxqPByFgrzVgv40aL6NGkKbdHhv00DIrbfcLA'
+    stripe.api_key = settings.STRIPE_SECRET_KEY
     intent = stripe.PaymentIntent.create(
         amount=total,
         currency='gbp',
         metadata={'userid': request.user.id}
     )
 
-    return render(request, 'payment/home.html', {'client_secret': intent.client_secret})
+    return render(request, 'payment/payment_form.html', {'client_secret': intent.client_secret,
+                                                            'STRIPE_PUBLISHABLE_KEY': os.environ.get('STRIPE_PUBLISHABLE_KEY')})
 
 def order_placed(request):
     basket = Basket(request)
