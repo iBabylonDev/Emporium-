@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -151,6 +153,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # Basket session ID
 BASKET_SESSION_ID = 'basket'
 
-os.environ.setdefault('pk_test_51MqaS7DERPQlw4gpzzn1bycnb3QvCGKP7NSgZcaZOAvdBJQpp3y8SlG6xHUK8Iq50x1ByThskWznZjmnrrVHLPTP00Tw4OLkXT', '')
+os.environ.setdefault('STRIPE_PUBLISHABLE_KEY','pk_test_51MqaS7DERPQlw4gpzzn1bycnb3QvCGKP7NSgZcaZOAvdBJQpp3y8SlG6xHUK8Iq50x1ByThskWznZjmnrrVHLPTP00Tw4OLkXT')
 STRIPE_SECRET_KEY='sk_test_51MqaS7DERPQlw4gpBVY62hOEHikBriHzaB3GESInVtozT5dppLcZD6YOssrmgHxqPByFgrzVgv40aL6NGkKbdHhv00DIrbfcLA'
 
